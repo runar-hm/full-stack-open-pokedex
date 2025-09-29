@@ -35,11 +35,14 @@ const App = () => {
     const pokemonId = pokemonList.find(
       ({ name }) => name === match.params.name
     ).id;
-    const next_id = pokemonId < 50 ? pokemonId + 1 : 1;
-    const prev_id = pokemonId > 1 ? pokemonId - 1 : 50;
 
-    previous = pokemonList.find(({ id }) => id === prev_id);
-    next = pokemonList.find(({ id }) => id === next_id);
+    const idx = pokemonList.findIndex(({ id }) => id === pokemonId);
+
+    const next_idx = idx < pokemonList.length - 1 ? idx + 1 : 1;
+    const prev_idx = idx > 0 ? idx - 1 : pokemonList.length - 1;
+
+    previous = pokemonList.find(({ id }) => id === pokemonList[prev_idx].id);
+    next = pokemonList.find(({ id }) => id === pokemonList[next_idx].id);
   }
 
   return (
