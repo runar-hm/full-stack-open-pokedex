@@ -47,7 +47,7 @@ jobs:
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
-          title: 'deploy'
+          title: 'Deployed :rocket:'
           description: 'Build and deploy to Render'
       - name: Discord Notification Failure
         uses: sarisia/actions-status-discord@v1
@@ -55,7 +55,7 @@ jobs:
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
-          title: 'deploy'
+          title: 'Deploy Failed :x: '
           description: 'commit https://github.com/${{ github.repository }}/commit/${{ github.sha }} failed to deploy.'
 
   tag_release:
