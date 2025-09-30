@@ -41,6 +41,23 @@ jobs:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
           curl "$deploy_url"
+      - name: Discord Notification Success
+        uses: sarisia/actions-status-discord@v1
+        if: ${{ success() }}
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          title: 'deploy'
+          description: 'Build and deploy to Render'
+      - name: Discord Notification Failure
+        uses: sarisia/actions-status-discord@v1
+        if: ${{ failure() }}
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          title: 'deploy'
+          description: 'commit https://github.com/${{ github.repository }}/commit/${{ github.sha }} failed to deploy.'
+
   tag_release:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-latest
